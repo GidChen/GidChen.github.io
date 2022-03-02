@@ -28,7 +28,7 @@
 <meta property="og:image" content="https://gidchen.github.io/2022/03/01/AQS%E7%9A%84%E5%8E%9F%E7%90%86%E5%8F%8A%E5%BA%94%E7%94%A8/f30c631c8ebbf820d3e8fcb6eee3c0ef18748.png">
 <meta property="og:image" content="https://gidchen.github.io/2022/03/01/AQS%E7%9A%84%E5%8E%9F%E7%90%86%E5%8F%8A%E5%BA%94%E7%94%A8/e9e385c3c68f62c67c8d62ab0adb613921117.png">
 <meta property="article:published_time" content="2022-03-01T12:09:57.000Z">
-<meta property="article:modified_time" content="2022-03-02T06:26:51.401Z">
+<meta property="article:modified_time" content="2022-03-02T06:41:53.895Z">
 <meta property="article:author" content="辻柒">
 <meta property="article:tag" content="多线程">
 <meta property="article:tag" content="AQS">
@@ -246,7 +246,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">3.6k字</span>
+      <span class="post-count">3.8k字</span>
     </span>
   </span>
 
@@ -255,7 +255,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">13分</span>
+      <span class="post-count">14分</span>
     </span>
   </span>
 </div>
@@ -549,6 +549,10 @@
 <p>hasQueuedPredecessors是公平锁加锁时判断等待队列中是否存在有效节点的方法。如果返回False，说明当前线程可以争取共享资源；如果返回True，说明队列中存在有效节点，当前线程必须加入到等待队列中。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// java.util.concurrent.locks.ReentrantLock</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">hasQueuedPredecessors</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="comment">// The correctness of this depends on head being initialized</span></span><br><span class="line">	<span class="comment">// before tail and on head.next being accurate if the current</span></span><br><span class="line">	<span class="comment">// thread is first in queue.</span></span><br><span class="line">	Node t = tail; <span class="comment">// Read fields in reverse initialization order</span></span><br><span class="line">	Node h = head;</span><br><span class="line">	Node s;</span><br><span class="line">	<span class="keyword">return</span> h != t &amp;&amp; ((s = h.next) == <span class="keyword">null</span> || s.thread != Thread.currentThread());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<blockquote>
+<p> h != t &amp;&amp; ((s = h.next) == null || s.thread != Thread.currentThread());为什么要判断头结点的下一个节点？第一个节点存储的数据是什么？</p>
+<p>双向链表中，第一个节点为虚节点，不存储任何信息，只是占位，真正第一个有数据的结点是从第二个节点开始的。当 h != t时：如果 ( s = h.next) == null，等待队列正在有现车进行初始化。但是只进行到了tail指向head，并没有将head指向tail，此时队列中有元素，需要返回true。如果(s = h.next) != null，说明队列中至少有一个有效节点。如果s.thread==Thread.currentThread()，说明等待队列的第一个有效节点中的线程与当前线程相同，那么当前线程是可以获取资源的。如果s.thread != Thread.currentThread()，说明等队列的第一个有效节点线程与当前线程不同，当前线程必须加入等待队列。</p>
+</blockquote>
 
     
 

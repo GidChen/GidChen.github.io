@@ -6,16 +6,16 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://gidchen.github.io">
-  <title>辻柒的博客</title>
+  <title>RPC遇到的问题 | 辻柒的博客</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="title: RPC遇到的问题date: 2022-03-02 20:57:13tags:  RPC Netty Dubbo  RPC遇到的问题1、什么是RPC框架？RPC指的是远程服务调用。也就是说有两台服务器A、B。一个应用部署在服务器A上，想要调用服务器B上提供的函数&#x2F;方法。由于不在一个内存空间，不能直接调用，需要通过网络来表达调用的语义和传达调用的数据。  首先，要解决通讯问题。主要是通过">
+  <meta name="description" content="RPC遇到的问题1、什么是RPC框架？RPC指的是远程服务调用。也就是说有两台服务器A、B。一个应用部署在服务器A上，想要调用服务器B上提供的函数&#x2F;方法。由于不在一个内存空间，不能直接调用，需要通过网络来表达调用的语义和传达调用的数据。  首先，要解决通讯问题。主要是通过在客户端和服务器之间建立TCP连接，远程成功调用的所有交换数据都在这个连接中进行传输。连接可以是按需连接，调用结束后断开，也可以">
 <meta property="og:type" content="article">
-<meta property="og:title" content="辻柒的博客">
+<meta property="og:title" content="RPC遇到的问题">
 <meta property="og:url" content="https://gidchen.github.io/2022/03/02/RPC%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="辻柒的博客">
-<meta property="og:description" content="title: RPC遇到的问题date: 2022-03-02 20:57:13tags:  RPC Netty Dubbo  RPC遇到的问题1、什么是RPC框架？RPC指的是远程服务调用。也就是说有两台服务器A、B。一个应用部署在服务器A上，想要调用服务器B上提供的函数&#x2F;方法。由于不在一个内存空间，不能直接调用，需要通过网络来表达调用的语义和传达调用的数据。  首先，要解决通讯问题。主要是通过">
+<meta property="og:description" content="RPC遇到的问题1、什么是RPC框架？RPC指的是远程服务调用。也就是说有两台服务器A、B。一个应用部署在服务器A上，想要调用服务器B上提供的函数&#x2F;方法。由于不在一个内存空间，不能直接调用，需要通过网络来表达调用的语义和传达调用的数据。  首先，要解决通讯问题。主要是通过在客户端和服务器之间建立TCP连接，远程成功调用的所有交换数据都在这个连接中进行传输。连接可以是按需连接，调用结束后断开，也可以">
 <meta property="og:locale">
 <meta property="og:image" content="https://gidchen.github.io/2022/03/02/RPC%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/image-20220302205953960.png">
 <meta property="og:image" content="https://gidchen.github.io/2022/03/02/RPC%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/image-20220302210015214-164622601661913.png">
@@ -31,9 +31,12 @@
 <meta property="og:image" content="https://gidchen.github.io/2022/03/02/RPC%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/c729d803d863cf741fd5d9a4cb41976f.png">
 <meta property="og:image" content="https://gidchen.github.io/2022/03/02/RPC%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/image-20220302210507309-164622630961524.png">
 <meta property="og:image" content="https://gidchen.github.io/2022/03/02/RPC%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/image-20220302210601112-164622636319725.png">
-<meta property="article:published_time" content="2022-03-02T12:57:13.978Z">
-<meta property="article:modified_time" content="2022-03-02T13:06:03.249Z">
+<meta property="article:published_time" content="2022-03-02T12:57:13.000Z">
+<meta property="article:modified_time" content="2022-03-02T13:18:15.606Z">
 <meta property="article:author" content="辻柒">
+<meta property="article:tag" content="RPC">
+<meta property="article:tag" content="Netty">
+<meta property="article:tag" content="Dubbo">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gidchen.github.io/2022/03/02/RPC%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/image-20220302205953960.png">
   
@@ -217,18 +220,60 @@
             <article id="post-RPC遇到的问题" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
+      <header class="article-header">
+  
+  
+    <h1 class="article-title" itemprop="name">
+      RPC遇到的问题
+    </h1>
+  
+
+
+  
+  
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
+<a href="/2022/03/02/RPC%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" class="archive-article-date">
+        <time datetime="2022-03-02T12:57:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-02</time>
+</a>
+
+  
+  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">13k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">53分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
 	<!-- 目录内容 -->
 	
 	<!-- 目录内容结束 -->  
   <div class="article-entry" itemprop="articleBody">
     
-    <p>title: RPC遇到的问题<br>date: 2022-03-02 20:57:13<br>tags:</p>
-<ul>
-<li>RPC</li>
-<li>Netty</li>
-<li>Dubbo</li>
-</ul>
-<h2 id="RPC遇到的问题"><a href="#RPC遇到的问题" class="headerlink" title="RPC遇到的问题"></a>RPC遇到的问题</h2><h3 id="1、什么是RPC框架？"><a href="#1、什么是RPC框架？" class="headerlink" title="1、什么是RPC框架？"></a>1、什么是RPC框架？</h3><p>RPC指的是远程服务调用。也就是说有两台服务器A、B。一个应用部署在服务器A上，想要调用服务器B上提供的函数/方法。由于不在一个内存空间，不能直接调用，需要通过网络来表达调用的语义和传达调用的数据。</p>
+    <h2 id="RPC遇到的问题"><a href="#RPC遇到的问题" class="headerlink" title="RPC遇到的问题"></a>RPC遇到的问题</h2><h3 id="1、什么是RPC框架？"><a href="#1、什么是RPC框架？" class="headerlink" title="1、什么是RPC框架？"></a>1、什么是RPC框架？</h3><p>RPC指的是远程服务调用。也就是说有两台服务器A、B。一个应用部署在服务器A上，想要调用服务器B上提供的函数/方法。由于不在一个内存空间，不能直接调用，需要通过网络来表达调用的语义和传达调用的数据。</p>
 <ul>
 <li>首先，要解决通讯问题。主要是通过在客户端和服务器之间建立TCP连接，远程成功调用的所有交换数据都在这个连接中进行传输。连接可以是按需连接，调用结束后断开，也可以是长连接，多个远程过程调用共享同一个连接。</li>
 <li>第二，要解决寻址问题。也就是说，A服务器上的应用如何告诉底层的RPC框架，如何连接到B服务器（如主机或IP地址）以及特定的端口，方法的名称是什么。这样才能够完成调用。</li>
@@ -812,7 +857,7 @@
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="https://gidchen.github.io/2022/03/02/RPC遇到的问题/" title="" target="_blank">https://gidchen.github.io/2022/03/02/RPC遇到的问题/</a>
+          <a href="https://gidchen.github.io/2022/03/02/RPC遇到的问题/" title="RPC遇到的问题" target="_blank">https://gidchen.github.io/2022/03/02/RPC遇到的问题/</a>
         </li>
         
         <li>
@@ -829,6 +874,25 @@
   <div class="article-info article-info-index">
     
     
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">RPC</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Netty</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Dubbo</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
     
 
     
@@ -1081,6 +1145,18 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">垃圾回收器</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">RPC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Netty</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Dubbo</a>
               </li>
             
             <div class="clearfix"></div>

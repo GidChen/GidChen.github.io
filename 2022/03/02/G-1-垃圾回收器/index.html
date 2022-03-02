@@ -6,19 +6,26 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://gidchen.github.io">
-  <title>Tag: ReentrantLock | 辻柒的博客</title>
+  <title>G-1 垃圾回收器 | 辻柒的博客</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="Do It Great.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="辻柒的博客">
-<meta property="og:url" content="https://gidchen.github.io/tags/ReentrantLock/index.html">
+  <meta name="description" content="G1 垃圾回收器1、简介G1垃圾回收器不同于其他垃圾回收器垃圾收集的目标范围要么是整个新生代，要么是整个老年代。G1垃圾回收器是可以面向堆内存的任何部分进行垃圾回收的。垃圾衡量的标准不再是其属于哪个分代而是哪块内存中存放的垃圾数量最多，回收效益最大，这就是G1垃圾回收器的Mixed GC模式。 G1开创了基于Region的堆内存布局。虽然在G1中同样遵循了分代收集的理论，但是其堆内存的布局与其他垃">
+<meta property="og:type" content="article">
+<meta property="og:title" content="G-1 垃圾回收器">
+<meta property="og:url" content="https://gidchen.github.io/2022/03/02/G-1-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8/index.html">
 <meta property="og:site_name" content="辻柒的博客">
-<meta property="og:description" content="Do It Great.">
+<meta property="og:description" content="G1 垃圾回收器1、简介G1垃圾回收器不同于其他垃圾回收器垃圾收集的目标范围要么是整个新生代，要么是整个老年代。G1垃圾回收器是可以面向堆内存的任何部分进行垃圾回收的。垃圾衡量的标准不再是其属于哪个分代而是哪块内存中存放的垃圾数量最多，回收效益最大，这就是G1垃圾回收器的Mixed GC模式。 G1开创了基于Region的堆内存布局。虽然在G1中同样遵循了分代收集的理论，但是其堆内存的布局与其他垃">
 <meta property="og:locale">
+<meta property="og:image" content="https://gidchen.github.io/2022/03/02/G-1-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8/image-20220302202154268-164622371609611.png">
+<meta property="article:published_time" content="2022-03-02T11:28:11.000Z">
+<meta property="article:modified_time" content="2022-03-02T12:50:52.634Z">
 <meta property="article:author" content="辻柒">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="JVM">
+<meta property="article:tag" content="垃圾回收器">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gidchen.github.io/2022/03/02/G-1-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8/image-20220302202154268-164622371609611.png">
   
     <link rel="alternative" href="/atom.xml" title="辻柒的博客" type="application/atom+xml">
   
@@ -197,73 +204,308 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-G-1-垃圾回收器" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
   
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2022" class="archive-year">2022</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/03/01/AQS%E7%9A%84%E5%8E%9F%E7%90%86%E5%8F%8A%E5%BA%94%E7%94%A8/" class="archive-article-date">
-        <time datetime="2022-03-01T12:09:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-01</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2022/03/01/AQS%E7%9A%84%E5%8E%9F%E7%90%86%E5%8F%8A%E5%BA%94%E7%94%A8/">AQS的原理及原理</a>
-	
+    <h1 class="article-title" itemprop="name">
+      G-1 垃圾回收器
     </h1>
   
 
 
-        <div class="article-info info-on-right">
+  
+  
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
+<a href="/2022/03/02/G-1-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8/" class="archive-article-date">
+        <time datetime="2022-03-02T11:28:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-02</time>
+</a>
+
+  
+  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">1.2k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">4分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
+	<!-- 目录内容 -->
+	
+		<p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
+			  <span class="btn-bg"></span>
+			  <span class="btn-text">文章导航</span>
+			  </p>
+	   <div id="toc-article" class="toc-article">
+		 <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
+		   <strong class="toc-title">文章目录</strong>
+			   <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#G1-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8"><span class="toc-number">1.</span> <span class="toc-text">G1 垃圾回收器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E7%AE%80%E4%BB%8B"><span class="toc-number">1.1.</span> <span class="toc-text">1、简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81G1%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">1.2.</span> <span class="toc-text">2、G1中遇到的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81G1%E7%9A%84%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="toc-number">1.3.</span> <span class="toc-text">3、G1的执行流程</span></a></li></ol></li></ol>
+			 </div>
+	   <script type="text/javascript">
+	   function showToc(){
+		  var toc_article = document.getElementById("toc-article");
+			var show_toc_btn = document.getElementById("show-toc-btn");
+		  toc_article.setAttribute("style","display:block");
+		   show_toc_btn.setAttribute("style","display:none");
+		   };
+	   function showBtn(){
+		  var toc_article = document.getElementById("toc-article");
+			var show_toc_btn = document.getElementById("show-toc-btn");
+		  toc_article.setAttribute("style","display:none");
+			show_toc_btn.setAttribute("style","display:block");
+		  };
+	   </script>
+		  
+	<!-- 目录内容结束 -->  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h2 id="G1-垃圾回收器"><a href="#G1-垃圾回收器" class="headerlink" title="G1 垃圾回收器"></a>G1 垃圾回收器</h2><h3 id="1、简介"><a href="#1、简介" class="headerlink" title="1、简介"></a>1、简介</h3><p>G1垃圾回收器不同于其他垃圾回收器垃圾收集的目标范围要么是整个新生代，要么是整个老年代。G1垃圾回收器是可以面向堆内存的任何部分进行垃圾回收的。垃圾衡量的标准不再是其属于哪个分代而是哪块内存中存放的垃圾数量最多，回收效益最大，这就是G1垃圾回收器的Mixed GC模式。</p>
+<p>G1开创了基于Region的堆内存布局。虽然在G1中同样遵循了分代收集的理论，但是其堆内存的布局与其他垃圾回收器相比有着明显的差异：G1不再是固定大小以及固定数量的区域划分，而是将连续的Java堆划分为多个大小相等的独立区域（Region），每一个Region可以根据需要，扮演新生代的Eden区，Survivor区或者老年代。G1能够对扮演不同角色的Region采用不同的策略进行处理。</p>
+<p>Region中的Humongous区域，专门用来存储大对象。这里的大对象在G1中定义为，超过Region容量一半的对象。Region的大小可以通过-XX：G1HeapRegionSize进行设置，取值范围为1MB~32MB，且为2的N次幂。当对象超过整个Region大小时，会将N个连续的Humongous Region对其进行存储。G1的大多数行为都把Humongous Region作为老年代的一部分来进行看待。</p>
+<p>G1从整体来看是基于“标记-整理”算法实现的收集器，但从局部（两个Region之间）上看又是基于“标记-复制”算法实现。</p>
+<p>虽然G1仍然保留新生代和老年代的概念，但新生代和老年代不再是固定的了，它们都是一系列区域（不需要连续）的动态集合。G1收集器之所以能建立可预测的停顿时间模型，是因为它将Region作为单次回收的最小单元，即每次收集到的内存空间都是Region大小的整数倍，这样可以有计划地避免在整个Java堆中进行全区域的垃圾收集。更具体的处理思路是让G1收集器去跟踪各个Region里面的垃圾堆积的“价值”大小，价值即回收所获得的空间大小以及回收所需时间的经验值，然后在后台维护一个优先级列表，每次根据用户设定允许的收集停顿时间（使用参数-XX：MaxGCPauseMillis指定，默认值是200毫秒），优先处理回收价值收益最大的那些Region，这也就是“Garbage First”名字的由来。这种使用Region划分内存空间，以及具有优先级的区域回收方式，保证了G1收集器在有限的时间内获取尽可能高的收集效率。</p>
+<p><img src="/2022/03/02/G-1-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8/image-20220302202154268-164622371609611.png" alt="image-20220302202154268"></p>
+<h3 id="2、G1中遇到的问题"><a href="#2、G1中遇到的问题" class="headerlink" title="2、G1中遇到的问题"></a>2、G1中遇到的问题</h3><ul>
+<li>将Java堆划分为多个独立的Region之后，Region里面存在的跨Region引用对象如何解决？</li>
+<li>在并发标记阶段如何保证收集线程与用于线程不干扰的运行？</li>
+<li>如何建立可靠的停顿预测模型？</li>
+</ul>
+<h3 id="3、G1的执行流程"><a href="#3、G1的执行流程" class="headerlink" title="3、G1的执行流程"></a>3、G1的执行流程</h3><ul>
+<li><strong>初始标记（Initial Marking）：</strong>仅仅标记一下GC Roots能够直接关联到的对象，并且修改TAMS指针的值，让下一阶段用户线程并发运行的时候，能够正确的在可用的Region中分配新对象。这个阶段需要STW，但是耗时很短，而且是借用进行Minor GC的时候进行的，所以G1在这个阶段没有额外的停顿。</li>
+<li><strong>并发标记（Concurrent Marking）：</strong>从GC Roots开始对堆中的对象进行可达性分析，递归扫描整个堆里的对象图，找出要回收的对象，这个阶段耗时比较长，但是可以与用户程序并发执行。当对象图扫描完成之后，需要重新处理SATB记录下的在并发时有引用变动的对象。</li>
+<li><strong>最终标记（Final Marking）：</strong>对用户线程做另一个短暂的暂停，用于处理并发阶段结束之后仍旧遗留下来的少量的STAB记录。</li>
+<li><strong>筛选回收（Live Data Counting and Evacuation）：</strong>负责更新Region的统计数据，对各个Region的回收价值和成本进行排序，根据用户所期望的停顿时间制定回收计划，可以自由选择多个Region构成回收集，然后将决定回收的部分Region的存活对象复制到空的Region中，再清理掉整个旧的Region空间。这里的操作涉及存活对象的移动，是必须暂停用户线程，由多条收集器线程并行完成的。</li>
+</ul>
+
+    
+
+    
+    <div class="page-reward">
+      <a href="javascript:void(0);" class="page-reward-btn tooltip-top" target="_self">
+        <div class="tooltip tooltip-east">
+          <span class="tooltip-item">
+            赏
+          </span>
+          <span class="tooltip-content">
+            <span class="tooltip-text">
+              <span class="tooltip-inner">
+                <p class="reward-p"><i class="icon icon-quo-left"></i>干杯 ( ゜- ゜)つロ<i
+                    class="icon icon-quo-right"></i></p>
+                <div class="reward-box">
+                  
+                  <div class="reward-box-item">
+                    <img class="reward-img" src="/img/alipay.jpg">
+                    <span class="reward-type">支付宝</span>
+                  </div>
+                  
+                  
+                  <div class="reward-box-item">
+                    <img class="reward-img" src="/img/weixin.jpg">
+                    <span class="reward-type">微信</span>
+                  </div>
+                  
+                </div>
+              </span>
+            </span>
+          </span>
+        </div>
+      </a>
+    </div>
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          辻柒
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="https://gidchen.github.io/2022/03/02/G-1-垃圾回收器/" title="G-1 垃圾回收器" target="_blank">https://gidchen.github.io/2022/03/02/G-1-垃圾回收器/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
           
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">多线程</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">AQS</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JVM</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ReentrantLock</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">垃圾回收器</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
+    
 
     
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://gidchen.github.io/2022/03/02/G-1-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+
+<nav id="article-nav">
+  
+    <a href="/2022/03/02/RPC%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/03/02/CMS%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">CMS垃圾回收器</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#G1-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8"><span class="toc-number">1.</span> <span class="toc-text">G1 垃圾回收器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E7%AE%80%E4%BB%8B"><span class="toc-number">1.1.</span> <span class="toc-text">1、简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81G1%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">1.2.</span> <span class="toc-text">2、G1中遇到的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81G1%E7%9A%84%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="toc-number">1.3.</span> <span class="toc-text">3、G1的执行流程</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
           </div>
@@ -306,9 +548,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,

@@ -10,15 +10,15 @@
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="MySQL面试题1、MySQL中存储引用使用的数据结构是B+树，B+树的查询时间与树的高度有关，是log(n)，如果用hash存储，查询时间是O(1)，既然hash比B+树更快，为什么MySQL使用B+树来存储索引呢？ 内存角度：数据库中的索引一般都在磁盘上，数据量大的情况可能无法一次性装入内存，B+树的设计可以允许数据分批加载。 业务场景：如果选择一个数据确实是hash更快，但是数据库中经常会选">
+  <meta name="description" content="MySQL面试题1、MySQL中存储引用使用的数据结构是B+树，B+树的查询时间与树的高度有关，是log(n)，如果用hash存储，查询时间是O(1)，既然hash比B+树更快，为什么MySQL使用B+树来存储索引呢？">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL面试题">
 <meta property="og:url" content="https://gidchen.github.io/2022/03/05/MySQL%E9%9D%A2%E8%AF%95%E9%A2%98/index.html">
 <meta property="og:site_name" content="辻柒的博客">
-<meta property="og:description" content="MySQL面试题1、MySQL中存储引用使用的数据结构是B+树，B+树的查询时间与树的高度有关，是log(n)，如果用hash存储，查询时间是O(1)，既然hash比B+树更快，为什么MySQL使用B+树来存储索引呢？ 内存角度：数据库中的索引一般都在磁盘上，数据量大的情况可能无法一次性装入内存，B+树的设计可以允许数据分批加载。 业务场景：如果选择一个数据确实是hash更快，但是数据库中经常会选">
+<meta property="og:description" content="MySQL面试题1、MySQL中存储引用使用的数据结构是B+树，B+树的查询时间与树的高度有关，是log(n)，如果用hash存储，查询时间是O(1)，既然hash比B+树更快，为什么MySQL使用B+树来存储索引呢？">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-03-05T05:52:30.000Z">
-<meta property="article:modified_time" content="2022-03-05T06:00:29.123Z">
+<meta property="article:modified_time" content="2022-03-08T08:20:48.286Z">
 <meta property="article:author" content="辻柒">
 <meta property="article:tag" content="MySQL">
 <meta property="article:tag" content="面试题">
@@ -281,7 +281,9 @@
 	<!-- 目录内容结束 -->  
   <div class="article-entry" itemprop="articleBody">
     
-    <h2 id="MySQL面试题"><a href="#MySQL面试题" class="headerlink" title="MySQL面试题"></a>MySQL面试题</h2><h3 id="1、MySQL中存储引用使用的数据结构是B-树，B-树的查询时间与树的高度有关，是log-n-，如果用hash存储，查询时间是O-1-，既然hash比B-树更快，为什么MySQL使用B-树来存储索引呢？"><a href="#1、MySQL中存储引用使用的数据结构是B-树，B-树的查询时间与树的高度有关，是log-n-，如果用hash存储，查询时间是O-1-，既然hash比B-树更快，为什么MySQL使用B-树来存储索引呢？" class="headerlink" title="1、MySQL中存储引用使用的数据结构是B+树，B+树的查询时间与树的高度有关，是log(n)，如果用hash存储，查询时间是O(1)，既然hash比B+树更快，为什么MySQL使用B+树来存储索引呢？"></a>1、MySQL中存储引用使用的数据结构是B+树，B+树的查询时间与树的高度有关，是log(n)，如果用hash存储，查询时间是O(1)，既然hash比B+树更快，为什么MySQL使用B+树来存储索引呢？</h3><ul>
+    <h2 id="MySQL面试题"><a href="#MySQL面试题" class="headerlink" title="MySQL面试题"></a>MySQL面试题</h2><h3 id="1、MySQL中存储引用使用的数据结构是B-树，B-树的查询时间与树的高度有关，是log-n-，如果用hash存储，查询时间是O-1-，既然hash比B-树更快，为什么MySQL使用B-树来存储索引呢？"><a href="#1、MySQL中存储引用使用的数据结构是B-树，B-树的查询时间与树的高度有关，是log-n-，如果用hash存储，查询时间是O-1-，既然hash比B-树更快，为什么MySQL使用B-树来存储索引呢？" class="headerlink" title="1、MySQL中存储引用使用的数据结构是B+树，B+树的查询时间与树的高度有关，是log(n)，如果用hash存储，查询时间是O(1)，既然hash比B+树更快，为什么MySQL使用B+树来存储索引呢？"></a>1、MySQL中存储引用使用的数据结构是B+树，B+树的查询时间与树的高度有关，是log(n)，如果用hash存储，查询时间是O(1)，既然hash比B+树更快，为什么MySQL使用B+树来存储索引呢？</h3><span id="more"></span>
+
+<ul>
 <li><strong>内存角度：</strong>数据库中的索引一般都在磁盘上，数据量大的情况可能无法一次性装入内存，B+树的设计可以允许数据分批加载。</li>
 <li><strong>业务场景：</strong>如果选择一个数据确实是hash更快，但是数据库中经常会选择多条数据（范围值）。这时候由于B+树索引有序，并且又有链表相连，它的查询效率相比hash更快。</li>
 </ul>

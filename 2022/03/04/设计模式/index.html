@@ -23,7 +23,7 @@
 <meta property="og:image" content="https://gidchen.github.io/2022/03/04/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/SouthEast.jpeg">
 <meta property="og:image" content="https://gidchen.github.io/2022/03/04/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/SouthEast-16464739550635.png">
 <meta property="article:published_time" content="2022-03-04T10:54:44.000Z">
-<meta property="article:modified_time" content="2022-03-05T09:58:24.841Z">
+<meta property="article:modified_time" content="2022-04-01T09:02:32.414Z">
 <meta property="article:author" content="辻柒">
 <meta property="article:tag" content="设计模式">
 <meta name="twitter:card" content="summary">
@@ -239,7 +239,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">2.5k字</span>
+      <span class="post-count">2.9k字</span>
     </span>
   </span>
 
@@ -248,7 +248,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">9分</span>
+      <span class="post-count">11分</span>
     </span>
   </span>
 </div>
@@ -313,7 +313,7 @@
 
 <h5 id="1-3-2-线程安全"><a href="#1-3-2-线程安全" class="headerlink" title="1.3.2 线程安全"></a>1.3.2 线程安全</h5><p>使用Synchronized保证线程安全，但其实实例化操作只做一次，而获取实例(即getInstance)的操作是很多次的，把调用的方法加上同步，会大大降低效率。</p>
 <h4 id="1-4-双重检查"><a href="#1-4-双重检查" class="headerlink" title="1.4 双重检查"></a>1.4 双重检查</h4><p>上面代码效率低，那在同步前判断一下有没有实例化不就好了，若没有实例化则用同步方法new一个，否则直接return即可。即所谓的双重检查。 需要用到关键字volatile，防止指令重排。如果不用volatile关键字，就会和线程不安全情形一样，在if判断那会有并发。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123; <span class="comment">//双重检查</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> Singleton instance;</span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(instance == <span class="keyword">null</span>) &#123; <span class="comment">//判断是否实例化</span></span><br><span class="line">			<span class="keyword">synchronized</span> (Singleton.class) &#123;</span><br><span class="line">				<span class="keyword">if</span>(instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">					instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> instance; <span class="comment">//否则直接return</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 双重锁校验的单例</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DoubleLock</span> <span class="keyword">implements</span> <span class="title">Serializable</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">volatile</span> DoubleLock doubleLock = <span class="keyword">null</span>;<span class="comment">//volatile防止指令重排序，内存可见(缓存中的变化及时刷到主存，并且其他的内存失效，必须从主存获取)</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">DoubleLock</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">//构造器必须私有  不然直接new就可以创建</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> DoubleLock <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">//第一次判断，假设会有好多线程，如果doubleLock没有被实例化，那么就会到下一步获取锁，只有一个能获取到，</span></span><br><span class="line">        <span class="comment">//如果已经实例化，那么直接返回了，减少除了初始化时之外的所有锁获取等待过程</span></span><br><span class="line">        <span class="keyword">if</span>(doubleLock == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (DoubleLock.class)&#123;</span><br><span class="line">                <span class="comment">//第二次判断是因为假设有两个线程A、B,两个同时通过了第一个if，然后A获取了锁，进入然后判断doubleLock是null，他就实例化了doubleLock，然后他出了锁，</span></span><br><span class="line">                <span class="comment">//这时候线程B经过等待A释放的锁，B获取锁了，如果没有第二个判断，那么他还是会去new DoubleLock()，再创建一个实例，所以为了防止这种情况，需要第二次判断</span></span><br><span class="line">                <span class="keyword">if</span>(doubleLock == <span class="keyword">null</span>)&#123;</span><br><span class="line">                    <span class="comment">//下面这句代码其实分为三步：</span></span><br><span class="line">                    <span class="comment">//1.开辟内存分配给这个对象</span></span><br><span class="line">                    <span class="comment">//2.初始化对象</span></span><br><span class="line">                    <span class="comment">//3.将内存地址赋给虚拟机栈内存中的doubleLock变量</span></span><br><span class="line">                    <span class="comment">//注意上面这三步，第2步和第3步的顺序是随机的，这是计算机指令重排序的问题</span></span><br><span class="line">                    <span class="comment">//假设有两个线程，其中一个线程执行下面这行代码，如果第三步先执行了，就会把没有初始化的内存赋值给doubleLock</span></span><br><span class="line">                    <span class="comment">//然后恰好这时候有另一个线程执行了第一个判断if(doubleLock == null)，然后就会发现doubleLock指向了一个内存地址</span></span><br><span class="line">                    <span class="comment">//这另一个线程就直接返回了这个没有初始化的内存，所以要防止第2步和第3步重排序</span></span><br><span class="line">                    doubleLock = <span class="keyword">new</span> DoubleLock();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> doubleLock;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>这样既实现了懒加载，又保证了线程安全。</p>
 <h4 id="1-4-静态内部类"><a href="#1-4-静态内部类" class="headerlink" title="1.4 静态内部类"></a>1.4 静态内部类</h4><p>静态内部类在外部类装载时不会实例化，当调用的时候才会装载并实例化，且JVM保证了其装载时的线程安全性。也能保证懒加载和线程安全，有点像自带版的双重检查。</p>
@@ -772,6 +772,22 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">面试总结</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">异步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">RabbitMQ</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">限流</a>
               </li>
             
             <div class="clearfix"></div>

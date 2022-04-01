@@ -204,6 +204,299 @@
             
 
   
+    <article id="post-MySQL中的锁机制" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2022/03/02/MySQL%E4%B8%AD%E7%9A%84%E9%94%81%E6%9C%BA%E5%88%B6/">MySQL中的锁机制</a>
+	
+    </h1>
+  
+
+
+  
+  
+<a href="/2022/03/02/MySQL%E4%B8%AD%E7%9A%84%E9%94%81%E6%9C%BA%E5%88%B6/" class="archive-article-date">
+        <time datetime="2022-03-02T14:53:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-02</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+	<!-- 目录内容 -->
+	
+	<!-- 目录内容结束 -->  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h2 id="MySQL中的锁机制"><a href="#MySQL中的锁机制" class="headerlink" title="MySQL中的锁机制"></a>MySQL中的锁机制</h2><h3 id="1、概述"><a href="#1、概述" class="headerlink" title="1、概述"></a>1、概述</h3><p>锁在数据库中的作用是为了更好的支持并发，提供数据的完整性和一致性。InnnoDB存储引擎支持行锁和表级锁。锁的类型有：<strong>共享锁（S）、排它锁（X），意向共享（IS）、意向排它（IX）</strong>。为了更好的支持并发，<strong>InnoDB中提供了非锁定读：不需要等待访问行上的锁释放，读取行的一个快照。该方法通过InnoDB的一个特性：MVCC进行实现的</strong>。</p>
+    
+    <a class="article-more-a" href="/2022/03/02/MySQL%E4%B8%AD%E7%9A%84%E9%94%81%E6%9C%BA%E5%88%B6/#more">more >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">MySQL</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">数据库</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2022/03/02/MySQL%E4%B8%AD%E7%9A%84%E9%94%81%E6%9C%BA%E5%88%B6/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-RPC遇到的问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2022/03/02/RPC%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/">RPC遇到的问题</a>
+	
+    </h1>
+  
+
+
+  
+  
+<a href="/2022/03/02/RPC%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" class="archive-article-date">
+        <time datetime="2022-03-02T12:57:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-02</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+	<!-- 目录内容 -->
+	
+	<!-- 目录内容结束 -->  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h2 id="RPC遇到的问题"><a href="#RPC遇到的问题" class="headerlink" title="RPC遇到的问题"></a>RPC遇到的问题</h2><h3 id="1、什么是RPC框架？"><a href="#1、什么是RPC框架？" class="headerlink" title="1、什么是RPC框架？"></a>1、什么是RPC框架？</h3><p>RPC指的是远程服务调用。也就是说有两台服务器A、B。一个应用部署在服务器A上，想要调用服务器B上提供的函数/方法。由于不在一个内存空间，不能直接调用，需要通过网络来表达调用的语义和传达调用的数据。</p>
+    
+    <a class="article-more-a" href="/2022/03/02/RPC%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/#more">more >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Netty</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">RPC</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Dubbo</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2022/03/02/RPC%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-G-1-垃圾回收器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2022/03/02/G-1-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8/">G-1 垃圾回收器</a>
+	
+    </h1>
+  
+
+
+  
+  
+<a href="/2022/03/02/G-1-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8/" class="archive-article-date">
+        <time datetime="2022-03-02T11:28:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-02</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+	<!-- 目录内容 -->
+	
+	<!-- 目录内容结束 -->  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h2 id="G1-垃圾回收器"><a href="#G1-垃圾回收器" class="headerlink" title="G1 垃圾回收器"></a>G1 垃圾回收器</h2><h3 id="1、简介"><a href="#1、简介" class="headerlink" title="1、简介"></a>1、简介</h3><p>G1垃圾回收器不同于其他垃圾回收器垃圾收集的目标范围要么是整个新生代，要么是整个老年代。G1垃圾回收器是可以面向堆内存的任何部分进行垃圾回收的。垃圾衡量的标准不再是其属于哪个分代而是哪块内存中存放的垃圾数量最多，回收效益最大，这就是G1垃圾回收器的Mixed GC模式。</p>
+    
+    <a class="article-more-a" href="/2022/03/02/G-1-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8/#more">more >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JVM</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">垃圾回收器</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2022/03/02/G-1-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-CMS垃圾回收器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -595,6 +888,22 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">面试总结</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">异步</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">RabbitMQ</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">限流</a>
               </li>
             
             <div class="clearfix"></div>
